@@ -21,24 +21,31 @@
                 
 
 <?php 
-if (!isset($_POST['buscacategoria'])){$_POST['buscacategoria'] = '';}
+
+$conex = mysqli_connect("localhost","root","1234","basegenero");
+
+if (!isset($_POST['genero'])){$_POST['genero'] = '';}
 if (!isset($_POST['buscafechadesde'])){$_POST['buscafechadesde'] = '';}
 if (!isset($_POST['buscafechahasta'])){$_POST['buscafechahasta'] = '';}
+if (!isset($_POST['llamante_region'])){$_POST['llamante_region'] = '';}
+if (!isset($_POST['lugar'])){$_POST['lugar'] = '';}
+if (!isset($_POST["nacionalidad"])){$_POST["nacionalidad"] = '';}
+if (!isset($_POST["llamante_vinculo"])){$_POST["llamante_vinculo"] = '';} 
 
-if (!isset($_POST['searchSE'])){$_POST['searchSE'] = '';}
-if (!isset($_POST["orden"])){$_POST["orden"] = '6';}
-if (!isset($_POST["limitReg"])){$_POST["limitReg"] = '100';} 
 ?>
 
 
 
 
+<section id="hero" class="d-flex flex-column justify-content-center">
+    <div class="container" data-aos="zoom-in" data-aos-delay="100">
 
+    <h2>REGISTRO DE LES PIBIS</h2><br><br>
 
-    <form id="form2" name="form2" method="POST" action="buscador.php">
+    <form id="form2" name="form2" method="POST">
             
-                <fieldset id="box" style="border-color:#0a061400;background-color: #0a061499;">
-               
+                
+                <div style="display: flex;">
                
                 <div id="divA">                                                      
                                                 
@@ -52,177 +59,225 @@ if (!isset($_POST["limitReg"])){$_POST["limitReg"] = '100';}
                 <input type="date" id="buscafechahasta" name="buscafechahasta" class="form-control" value="<?php echo $_POST["buscafechahasta"]; ?>" >
         
                 </div>
-                
+               
+                </div>
+
+                <div style="display: flex;">
                 <div id="divA">
-                                                            <h5>Sector </h5>
-                                                            <select id="assigned-tutor-filter" id="searchSE" name="searchSE" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-                                                                    <?php if ($_POST["searchSE"] != ''){ ?>
-                                                                    <option value="<?php echo $_POST["searchSE"]; ?>">
-                                                                     <?php 
-                                                                    if ($_POST["orden"] == ''){echo 'Todos los Sectores';}  
-                                                                    if ($_POST["orden"] == '4'){echo 'Electricidad';} 
-                                                                    if ($_POST["orden"] == '5'){echo 'Armado';} 
-                                                                    if ($_POST["orden"] == '6'){echo 'Pintura';}
-                                                                    if ($_POST["orden"] == '7'){echo 'Carpinteria Metalica';} 
-                                                                    if ($_POST["orden"] == '9'){echo 'Almacen';}   
-                                                                    if ($_POST["orden"] == '12'){echo 'Celdas';} 
-                                                                    if ($_POST["orden"] == '14'){echo 'Calidad';} 
-                                                                    if ($_POST["orden"] == '15'){echo 'Celdas Avellaneda';}
-                                                                    if ($_POST["orden"] == '17'){echo 'Barras';}  
 
-                                                                     ?>   
-                                                                
-                                                                    </option>
-                                                                    <?php } ?>
-                                                                        <option value="">Todos los Sectores</option>
-                                                                        <option value="4">Electricidad</option>
-                                                                        <option value="5">Armado</option>
-                                                                        <option value="6">Pintura</option>
-                                                                        <option value="7">Carpinteria Metalica</option>
-                                                                        <option value="9">Almacen</option>
-                                                                        
-                                                                        <option value="12">Celdas</option>
-                                                                        <option value="14">Calidad</option>
-                                                                        <option value="15">Celdas Avellaneda</option>
-                                                                        
-                                                                        <option value="17">Barras</option>
-                                                                        
-                                
-                                                            </select>
-                                                            </div><div id="divA">
-                                                            <h5>Selecciona el Orden </h5>
-                                                            <select id="assigned-tutor-filter" id="orden" name="orden" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-                                                                    <?php if ($_POST["orden"] != ''){ ?>
-                                                                    <option value="<?php echo $_POST["orden"]; ?>">
-                                                                    <?php 
-                                                                    if ($_POST["orden"] == '1'){echo 'Ordenar por Sector';} 
-                                                                    if ($_POST["orden"] == '2'){echo 'Ordenar por Categoria';} 
-                                                                    if ($_POST["orden"] == '3'){echo 'Ordenar por Pedido Fabricacion';}
-                                                                    if ($_POST["orden"] == '4'){echo 'Ordenar por Operario';} 
-                                                                    if ($_POST["orden"] == '5'){echo 'Ordenar por Tarea';}   
-                                                                    if ($_POST["orden"] == '6'){echo 'Ordenar por fecha mas reciente';} 
-                                                                    if ($_POST["orden"] == '7'){echo 'Ordenar por fecha mas antigua';} 
-                                                                    ?>
-                                                                    </option>
-                                                                    <?php } ?>
-                                                                    <option value="7">Ordenar por Fecha Mas Antigua</option>
-                                                                    <option value="6">Ordenar por Fecha Mas Reciente</option>
-                                                                    <option value="1">Ordenar por Sector</option>
-                                                                    <option value="2">Ordenar por Categoria</option>      
-                                                                    <option value="3">Ordenar por Pedido Fabricacion</option>
-                                                                    <option value="4">Ordenar por Operario</option>
-                                                                    <option value="5">Ordenar por Tarea</option>
-                                                                    
-                                                            </select>
+               <?php
+               $sql1="SELECT idGenero, descripGen from genero";
+               $result1=mysqli_query($conex,$sql1);
+               ?>         
 
-                                                            </div>
-                                                            <div id="divA">
-                                                            <h5>Limite Registros</h5>
-                                                            <select id="assigned-tutor-filter" id="limitReg" name="limitReg" class="form-control mt-2" style="border: #bababa 1px solid; color:#000000;" >
-                                                            <?php if ($_POST["limitReg"] != ''){ ?>
-                                                                    <option value="<?php echo $_POST["limitReg"]; ?>">
-                                                                    <?php 
-                                                                    if ($_POST["limitReg"] == ''){echo 'Todos los Registros';} 
-                                                                    if ($_POST["limitReg"] == '100'){echo '100';} 
-                                                                    if ($_POST["limitReg"] == '500'){echo '500';}
-                                                                    if ($_POST["limitReg"] == '1000'){echo '1000';} 
-                                                                    if ($_POST["limitReg"] == '3000'){echo '3000';} 
-                                                                     
-                                                                     
-                                                                    ?>
-                                                                    </option>
-                                                                    <?php } ?>
-                                                                    
-                                                                    <option value="">Todos los Registros</option> 
-                                                                    <option value="100">100</option>    
-                                                                    <option value="500">500</option>
-                                                                    <option value="1000">1000</option>
-                                                                    <option value="3000">3000</option>
-                                                                    
-                                                                    
-                                                            </select>
+                       
+<section style="text-align: center;">
+        <select id="controlBuscador" name="genero" lang="es">
+        <option value="">ELEGIR GENERO</option>
+                <?php while ($ver1=mysqli_fetch_row($result1)) {?>
+
+                <option value="<?php echo $ver1[0] ?>">
+                        <?php echo $ver1[1] ?>
+                </option>
+
+                <?php  }?>
+        </select>
+</section>	           
+</div>
                                                             
-                                                            </div>
-                                                            <input type="submit" id="button4" value="BUSCAR"><br><br><br>
-                                                        </fieldset>
-                                                        
-                    <div class="table-responsive">
-                                                        <div class="col-12 row m-0 p-0">
+
+        
+        <div id="divA">
+        
+        <?php
+               $sql3="SELECT idVinculo, descripVinculo from llamante_vinculo";
+
+               $result3=mysqli_query($conex,$sql3);
+               ?>         
+
                 
-                <div class="col-12">
-                    </div>
-                    <div class="col-1">
-                            
-                    </div>
-            </div>
-                                                                    </div>
-                                                                   <div class="card col-12 mt-2" style="background-color: #f0f8ffad;">
-            <?php 
+                       
+<section style="text-align: center;">
+        <select id="controlBuscador3" name="vinculo" lang="es">
+        <option value="">ELEGIR VINCULO</option>
+                <?php while ($ver3=mysqli_fetch_row($result3)) {?>
+
+                <option value="<?php echo $ver3[0] ?>">
+                        <?php echo $ver3[1] ?>
+                </option>
+
+                <?php  }?>
+        </select>
+</section>	                  
+
+
+
+        </div>
+
+        <div id="divA">
+        
+        <?php
+               $sql4="SELECT idLugar, decripLugar from lugar";
+               
+               $result4=mysqli_query($conex,$sql4);
+               ?>         
+
+               
+                       
+<section style="text-align: center;">
+        <select id="controlBuscador4" name="lugar" lang="es">
+        <option value="">ELEGIR LUGAR</option>
+                <?php while ($ver4=mysqli_fetch_row($result4)) {?>
+
+                <option value="<?php echo $ver4[0] ?>">
+                        <?php echo $ver4[1] ?>
+                </option>
+
+                <?php  }?>
+        </select>
+</section>	                  
+
+</div>
+
+<div id="divA">
+        
+        <?php
+               $sql5="SELECT idNacion, descrip_nacionalidad from nacionalidad";
+               
+               $result5=mysqli_query($conex,$sql5);
+               ?>         
+
+                       
+<section style="text-align: center;">
+        <select id="controlBuscador5" name="nacionalidad" lang="es">
+        <option value="">ELEGIR NACIONALIDAD</option>
+                <?php while ($ver5=mysqli_fetch_row($result5)) {?>
+
+                <option value="<?php echo $ver5[0] ?>">
+                        <?php echo $ver5[1] ?>
+                </option>
+
+                <?php  }?>
+        </select>
+</section>	                  
+
+</div>
+
+<div id="divA">
+        
+        <?php
+               $sql6="SELECT idRegion, desc_region from llamante_region";
+               
+               $result6=mysqli_query($conex,$sql6);
+               ?>         
+
+                        
+<section style="text-align: center;">
+        <select id="controlBuscador6" name="llamante_region" lang="es">
+        <option value="">ELEGIR REGION</option>
+                <?php while ($ver6=mysqli_fetch_row($result6)) {?>
+
+                <option value="<?php echo $ver6[0] ?>">
+                        <?php echo $ver6[1] ?>
+                </option>
+
+                <?php  }?>
+        </select>
+</section>	                  
+
+</div>
+
+
+
+
+
+        
+
+   </div>
+                                                        
+   <input type="submit" id="componeFoto3" class="btn btn-success" name="actualizar" value="BUSCAR">
+   </form>
+    </div>
+    </section>
+    <?php 
             /*FILTRO de busqueda////////////////////////////////////////////*/
             
-*
+            
             
           
-            if ($_POST["buscar"] == '' AND $_POST['searchSE'] == '' AND $_POST['buscacategoria'] == '' AND $_POST['buscafechadesde'] == '' AND $_POST['buscafechahasta'] == '' AND $_POST['searchPF'] == ''){ 
-                    $query ="SELECT s.nom_sector, r.operario, r.tarea,
-                    r.cliente, r.pFab_full, r.horaInicio, r.horaFin, r.tiempoTarea,
-                    descanso, estado, descripTarea, r.sector
-                                                                    FROM registros r
-                                                                    LEFT JOIN sector s
-                                                                    ON r.sector = s.idSector ";
-                    $queryCalHS = "SELECT sum(tiempoTarea) sumaTotal from 
-                    registros ";
+            if ($_POST["genero"] == '' 
+             AND $_POST['lugar'] == '' 
+             AND $_POST['nacionalidad'] == ''
+             AND $_POST['vinculo'] == ''
+             AND $_POST['llamante_region'] == ''){ 
+                   
+                   $query ="SELECT llamadoHora,desc_region,llamante_edad,victima_edad, victima_convive_agresor, 
+                    DATE_FORMAT(llamado_fecha,'%d-%m-%Y') as fecha, descripGen,
+                    descrip_nacionalidad, decripLugar,llamante_vinculo,
+                    descripVinculo FROM datos
+                    LEFT JOIN llamante_region ON idRegion = llamado_region
+                    LEFT JOIN nacionalidad on idNacion = victima_nacionalidad
+                    LEFT JOIN genero ON idGenero = victima_genero
+                    LEFT JOIN lugar ON idLugar = hecho_lugar
+                    LEFT JOIN llamante_vinculo ON idVinculo = llamante_vinculo 
+                    WHERE codigo >= 0 ";
+                    
+
                     
             }else{
 
 
-                    $query ="SELECT r.idRegistro, s.nom_sector, r.operario, r.tarea,
-                    r.cliente, r.pFab_full, r.horaInicio, r.horaFin, r.tiempoTarea,
-                     descanso, estado, descripTarea, r.sector
-                                                                    FROM registros r
-                                                                    LEFT JOIN sector s
-                                                                    ON r.sector = s.idSector ";
-                    $queryCalHS = "SELECT sum(tiempoTarea) sumaTotal from 
-                    registros ";
+                    $query ="SELECT llamadoHora,desc_region,llamante_edad,victima_edad, victima_convive_agresor, 
+                    DATE_FORMAT(llamado_fecha,'%d-%m-%Y') as fecha, descripGen,
+                    descrip_nacionalidad, decripLugar, llamante_vinculo,
+                    descripVinculo FROM datos
+                    LEFT JOIN llamante_region ON idRegion = llamado_region
+                    LEFT JOIN nacionalidad on idNacion = victima_nacionalidad
+                    LEFT JOIN genero ON idGenero = victima_genero
+                    LEFT JOIN lugar ON idLugar = hecho_lugar
+                    LEFT JOIN llamante_vinculo ON idVinculo = llamante_vinculo 
+                    WHERE codigo >= 0  ";
+
                     
 
-            if ($_POST["buscar"] != '' ){ 
-                    $query .= "WHERE (operario LIKE LOWER('%".$aKeyword[0]."%') OR tarea LIKE LOWER('%".$aKeyword[0]."%') OR cliente LIKE LOWER('%".$aKeyword[0]."%'))";
-                    $queryCalHS .= "WHERE (operario LIKE LOWER('%".$aKeyword[0]."%') OR tarea LIKE LOWER('%".$aKeyword[0]."%') OR cliente LIKE LOWER('%".$aKeyword[0]."%'))";
-            
-            for($i = 1; $i < count($aKeyword); $i++) {
-              if(!empty($aKeyword[$i])) {
-                  $query .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR tarea LIKE '%" . $aKeyword[$i] . "%' OR cliente LIKE '%" . $aKeyword[$i] . "%'";
-                  $queryCalHS .= " OR nombre LIKE '%" . $aKeyword[$i] . "%' OR tarea LIKE '%" . $aKeyword[$i] . "%' OR cliente LIKE '%" . $aKeyword[$i] . "%'";
-              }
-            }
+            if ($_POST["genero"] != '' ){ 
+                    
+                    $query .= " AND victima_genero = '".$_POST['genero']."' ";
+                    
 
             }
 
-            if ($_POST["buscacategoria"] != '' ){
-                    $query .= " AND categoria = '".$_POST['buscacategoria']."' ";
-                    $queryCalHS .= " AND categoria = '".$_POST['buscacategoria']."' ";
+            if ($_POST["lugar"] != '' ){
+                    $query .= " AND hecho_lugar = '".$_POST['lugar']."' ";
+                    
                     
             }
 
-            if ($_POST["searchSE"] != '' ){
-                $query .= " AND sector = '".$_POST['searchSE']."' ";
-                $queryCalHS .= " AND sector = '".$_POST['searchSE']."' ";
+            if ($_POST["nacionalidad"] != '' ){
+                $query .= " AND victima_nacionalidad = '".$_POST['nacionalidad']."' ";
+                
                 
         }
 
             if ($_POST["buscafechadesde"] != '' ){
                     $query .= " AND fecha BETWEEN '".$_POST["buscafechadesde"]."' AND '".$_POST["buscafechahasta"]."' ";
-                    $queryCalHS .= " AND fecha BETWEEN '".$_POST["buscafechadesde"]."' AND '".$_POST["buscafechahasta"]."' ";
+                    
             }
 
-            if ( $_POST['searchPF'] != '' ){
-                    $query .= " AND pFab_full LIKE ('%".$_POST['searchPF']."%') ";
-                    $queryCalHS .= " AND pFab_full LIKE ('%".$_POST['searchPF']."%') ";
-            }
+            if ($_POST["llamante_region"] != '' ){
+                $query .= " AND llamado_region = '".$_POST['llamante_region']."' ";
+                
+                
+        }
+
+        if ($_POST["vinculo"] != '' ){
+                $query .= " AND llamante_vinculo = '".$_POST['vinculo']."' ";
+                
+                
+        }
             
           
-            /*FILTRO ORDENAMIENTO*/
+            /*FILTRO ORDENAMIENTO
             if ($_POST["orden"] == '1' ){
                 $query .= " ORDER BY sector DESC ";
         }
@@ -269,109 +324,58 @@ if (!isset($_POST["limitReg"])){$_POST["limitReg"] = '100';}
                 $query.= " LIMIT 3000";
         }
 
+*/
 
-
-        }  # echo $query;
+        }  
            
-
+          
             $sqlFiltro = $conex->query($query); 
             $numeroSql = mysqli_num_rows($sqlFiltro);
         ?>
 
             
                     
-            <h5><i class="mdi mdi-file-document"></i> <?php echo $numeroSql; ?> Resultados</h5>
-    </form>
-    <div class="table-responsive" style="margin-right: 0.9%">
+            <h5><i class="mdi mdi-file-document"></i> Se encontraron <?php echo ' '.$numeroSql; ?> resultados</h5>
+   
+    <div class="table-responsive table-fixed">
             <table class="table">
                         <thead>
                             <tr style="background-color:#6a7d8d;">
                                     
-                                    <th style=" text-align: center; width: 100px;"> N° Registro 
-                                    
-                                </th>  
-                                    <th style=" text-align: center;"> Cliente </th>
-                                    <th style=" text-align: center;"> Ped.Fab./Ord.Trab. </th>
-                                    <th style=" text-align: center;"> Sector </th>
-                                    <th style=" text-align: center;"> Tarea </th>
-                                    <th style=" text-align: center; width: 120px;"> Desc. </th>
-                                    <th style=" text-align: center;"> Operario </th>
-                                    <th style=" text-align: center;"> Hora Inicio </th>
-                                    <th style=" text-align: center;"> Hora Fin </th>
-                                    <th style=" text-align: center; width:140px;"> Tiempo Tarea (h) </th>
-                                    <th style=" text-align: center; width: 90px;"> Estado </th>
+                                  
+                                <th>FECHA</th>
+                                <th>HORA</th>
+                                <th>LLAMADO REGION</th>
+                                <th>LLAMANTE EDAD</th> 
+                                <th>LLAMANTE VINCULO</th>
+                                <th>VICTIMA GENERO</th>
+                                <th>VICTIMA EDAD</th>
+                                <th>VICTIMA NACIONALIDAD</th>
+                                <th>LUGAR</th>
+
                             </tr>
                          </thead>
                          <tbody><tr>
                                  
-                        </tr></tbody></table></div>
-    <div class="table-responsive table-fixed">
-            <table id="datatables" class="table" >
-                    <thead>
-                            <tr style="background-color:#6a7d8d;">
-                                 <th style="width: 100px;"></th><th></th><th></th><th></th><th></th><th style="width: 120px;"></th><th></th><th></th><th></th><th style="width:140px;"></th><th style="width:90px;"></th>      
-                            </tr>
-                    </thead>
-                    <tbody>
+                        </tr></tbody>
+                        
                     <?php While($rowSql = $sqlFiltro->fetch_assoc()) { #color para descanso #b95f5f  ?>
                         
                             <tr>
-                            <td style="text-align: center; width: 100px;"><?php echo $rowSql["idRegistro"]; 
-                            
-                            ?>    
-                            </td>
-                            <td style="text-align: center;"><?php echo $rowSql["cliente"]; ?></td>
-                            <td style="text-align: center;"><?php echo $rowSql["pFab_full"]; ?></td>
-                            <td style="text-align: center;"><?php echo $rowSql["nom_sector"]; ?></td>
-                            <td style="text-align: center;"><?php echo $rowSql["tarea"]; ?></td>
-                            <td id="componeFoto3" class="primera_col" style="text-align: center;width: 120px;"><?php echo $rowSql["descripTarea"]; ?></td>
-                            <td style=" text-align: center;"><?php echo $rowSql["operario"]; ?></td>
-                            <td style=" text-align: center;"><?php echo $rowSql["horaInicio"]; ?></td>
-                            <td style=" text-align: center;"><?php echo $rowSql["horaFin"]; ?></td>
-                            <td style=" text-align: center;width:140px;"><?php echo (round($rowSql['tiempoTarea']/3600,2)); ?></td>
-                            <td style="text-align: center; width: 90px !important; ">
-                         
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+                                <td style="font-size:85%;"><?php  echo $rowSql['fecha']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['llamadoHora']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['desc_region']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['llamante_edad']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['descripVinculo']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['descripGen']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['victima_edad']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['descrip_nacionalidad']; ?></h5></td>
+                                <td style="font-size:85%;"><?php echo $rowSql['decripLugar']; ?></h5></td>
+
                 <?php
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+   
                 } ?>
                     </tbody>
             </table>
@@ -380,16 +384,11 @@ if (!isset($_POST["limitReg"])){$_POST["limitReg"] = '100';}
 
 
 <style>
-         #componeFoto3{
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        }
-
+        
         #componeFoto3:hover{
-                        font-size: xx-small;       
-                        background-color: #96a3ad;  
-                        transform: scale(1.5);
+                            
+                        
+                        transform: scale(1.2);
                         transition: transform .2s;
                         white-space:break-spaces;
         }
@@ -397,32 +396,25 @@ if (!isset($_POST["limitReg"])){$_POST["limitReg"] = '100';}
         
 
 </style>
+<script type="text/javascript">
 
+$(document).ready(function(){
+        $('#controlBuscador').select2();
+});
 
+$(document).ready(function(){
+        $('#controlBuscador3').select2();
+});
 
+$(document).ready(function(){
+        $('#controlBuscador4').select2();
+});
 
+$(document).ready(function(){
+        $('#controlBuscador5').select2();
+});
 
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-
-
-      </div>
-</div>
-<!-- END buscador basico -->
-
+$(document).ready(function(){
+        $('#controlBuscador6').select2();
+});
+</script>
