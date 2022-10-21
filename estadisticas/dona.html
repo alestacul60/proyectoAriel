@@ -1,0 +1,70 @@
+
+<body>
+    
+    <canvas id="myChart" style="position: relative; height: 90vh; width: 70vw;"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart')
+        const bgColor = {
+            id: 'bgColor',
+            beforeDraw:(chart, options) =>{
+                const {ctx, width, height} = chart;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0,0, width, height)
+                ctx.restore();
+            }
+        }
+        var myChart = new Chart(ctx, {
+            type:'doughnut',
+            data:{
+                datasets: [{
+                    label: 'CASOS POR NACIONALIDAD DE LA VICTIMA',
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderColor: ['grey'],
+                    borderWidth:1,
+                    hoverBackgroundColor: ['rgba(147, 149, 151)'],
+                    hoverBorderColor: ['rgba(245,233,77)'],
+                    hoverBorderWidth: 3,
+                    hoverOffset: 10
+                }]
+            },
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true
+                    }
+                }
+            }, plugins: [bgColor]
+
+        })
+
+        let url = 'http://localhost/dbproyecto/estadisticas/jsonNacionalidad.php'
+        fetch(url)
+            .then( response => response.json() )
+            .then( datos => mostrar(datos) )
+            .catch( error => console.log(error) )
+
+
+        const mostrar = (registros) =>{
+            registros.forEach(element => {
+                myChart.data['labels'].push(element.descrip_nacionalidad)
+                myChart.data['datasets'][0].data.push(element.cuenta)
+                myChart.update()
+            });
+            console.log(myChart.data)
+        }    
+
+   
+
+    </script>
+</body>
+</html>

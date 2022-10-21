@@ -1,0 +1,70 @@
+<body>
+    
+    <canvas id="myChart3" style="position: relative; height: 10vh; width: 10vw;"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var ctx3 = document.getElementById('myChart3')
+        var myChart3 = new Chart(ctx3, {
+            type:'bar',
+            data:{
+                datasets: [{
+                    label: 'VINCULO VICTIMA - AGRESOR',
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(114, 158, 161, 0.6)',
+                    'rgba(181, 189, 137, 0.6)',
+                    'rgba(223, 190, 153, 0.6)',
+                    'rgba(236, 145, 146, 0.6)',
+                    'rgba(219, 83, 117, 0.6)',
+                    'rgba(0, 210, 146, 0.6)',
+                    'rgba(83, 153, 176, 0.6)',
+                    'rgba(166, 96, 206, 0.6)',
+                    'rgba(183, 148, 203, 0.6)',
+                    'rgba(199, 199, 199, 0.6)',
+                    ],
+                    borderColor: ['grey'],
+                    borderWidth:1,
+                    hoverBackgroundColor: ['rgba(147, 149, 151)'],
+                    hoverBorderColor: ['rgba(245,233,77)'],
+                    hoverBorderWidth: 3,
+                    hoverOffset: 10
+
+                }]
+            },
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true
+                    }
+                }
+            }, plugins:[bgColor]
+        })
+
+        let url3 = 'http://localhost/dbproyecto/estadisticas/jsonVinculo.php'
+        fetch(url3)
+            .then( response3 => response3.json() )
+            .then( datos3 => mostrar3(datos3) )
+            .catch( error3 => console.log(error3) )
+
+
+        const mostrar3 = (registros) =>{
+            registros.forEach(element3 => {
+                myChart3.data['labels'].push(element3.descripVinculoVicAgre)
+                myChart3.data['datasets'][0].data.push(element3.cuenta2)
+                myChart3.update()
+            });
+            
+        }    
+
+   
+
+    </script>
+</body>
+</html>

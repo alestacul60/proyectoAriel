@@ -30,7 +30,7 @@ if (!isset($_POST['buscafechahasta'])){$_POST['buscafechahasta'] = '';}
 if (!isset($_POST['llamante_region'])){$_POST['llamante_region'] = '';}
 if (!isset($_POST['lugar'])){$_POST['lugar'] = '';}
 if (!isset($_POST["nacionalidad"])){$_POST["nacionalidad"] = '';}
-if (!isset($_POST["llamante_vinculo"])){$_POST["llamante_vinculo"] = '';} 
+if (!isset($_POST["vinculo"])){$_POST["vinculo"] = '';} 
 
 ?>
 
@@ -210,7 +210,7 @@ if (!isset($_POST["llamante_vinculo"])){$_POST["llamante_vinculo"] = '';}
              AND $_POST['nacionalidad'] == ''
              AND $_POST['vinculo'] == ''
              AND $_POST['llamante_region'] == ''){ 
-                   
+                  
                    $query ="SELECT llamadoHora,desc_region,llamante_edad,victima_edad, victima_convive_agresor, 
                     DATE_FORMAT(llamado_fecha,'%d-%m-%Y') as fecha, descripGen,
                     descrip_nacionalidad, decripLugar,llamante_vinculo,

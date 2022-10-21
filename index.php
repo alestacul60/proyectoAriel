@@ -52,7 +52,7 @@ include('con_db.php');
     <nav id="navbar" class="navbar nav-menu">
       <ul>
         <!--<li><a href="index.php" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Aca nose aun</span></a></li>
---><li><a href="cerrarSession.php" class="nav-link scrollto active"><i class="bx bx-stats"></i> <span>Estadisticas</span></a></li>
+--><li><a href="estadisticas/estadisticas.php" class="nav-link scrollto active"><i class="bx bx-stats"></i> <span>Estadisticas</span></a></li>
       </ul>
     </nav>
 
