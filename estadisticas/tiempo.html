@@ -1,0 +1,60 @@
+<body>
+    
+    <canvas id="myChartEV" style="position: relative; height: 20vh; width: 70vw;"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script>
+        var ctxEV = document.getElementById('myChartEV')
+     
+        var myChartEV = new Chart(ctxEV, {
+            type:'line',
+            data:{
+                datasets: [{
+                    label: 'CANTIDAD DE CASOS EN EL TIEMPO',
+                    backgroundColor: [
+                    'rgba(13, 66, 27, 0.5)'
+                    ],
+                    fill: true,
+                    borderColor: ['rgba(29, 84, 72, 1)'],
+                    borderWidth:1.3,
+                    tension: 0.4,
+                    hoverBackgroundColor: ['rgba(147, 149, 151)'],
+                    hoverBorderColor: ['black'],
+                    hoverBorderWidth: 3,
+                    hoverOffset: 20
+                    
+                    
+                }]
+            },
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true
+                    }
+                }
+            }, plugins:[bgColor]
+        })
+
+        let urlEV = 'http://localhost/dbproyecto/estadisticas/jsonTiempo.php'
+        fetch(urlEV)
+            .then( responseEV => responseEV.json() )
+            .then( datosEV => mostrarEV(datosEV) )
+            .catch( errorEV => console.log(errorEV) )
+
+
+        const mostrarEV = (registros) =>{
+            registros.forEach(elementEV => {
+                myChartEV.data['labels'].push(elementEV.llamado_fecha)
+                myChartEV.data['datasets'][0].data.push(elementEV.cantidad)
+                 
+                myChartEV.update()
+            });
+            //console.log(myChart2.data)
+        }
+
+
+    </script>
+</body>
+</html>

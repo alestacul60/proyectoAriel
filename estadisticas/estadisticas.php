@@ -72,11 +72,11 @@ include('../con_db.php');
 <br>
 <div style="display: flex;">
     <div style="
-    padding: 30px;
+   padding: 30px;
     border-radius: 20px;
     background: white;
     margin-left: 50px;
-    margin-right: 25px;
+    margin-right: 25px; 
     width: 400px;">
         <?php include('dona.html'); ?>
     </div>
@@ -91,8 +91,19 @@ include('../con_db.php');
         <?php include('barra.html'); ?>
     </div>
 </div>
-                        
-                     
+
+    <div style="
+   padding: 30px;
+    border-radius: 20px;
+    background: white;
+    margin-left: 50px;
+    margin-right: 25px;">
+<?php
+
+include('tiempo.html');
+
+?>
+</div>                  
       
 
   <main id="main">
