@@ -32,7 +32,10 @@ if(cactus.offsetLeft < 1 ){
         './enemigo1.gif',
         './enemigo2.gif',
         './enemigo3.gif',
-        './enemigo4.png'
+        './enemigo4.png',
+        './enemigo5.gif',
+        './enemigo6.gif',
+        './enemigo7.gif'
     );
 
     var index = Math.floor((Math.random()*imagenes.length));
