@@ -104,7 +104,8 @@ include('tiempo.html');
 
 ?>
 </div>                  
-      
+
+<a href="../juego/index.php" class="btn btn-success">HACER UNA MARCHA</a>
 
   <main id="main">
 
